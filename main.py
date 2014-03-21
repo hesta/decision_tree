@@ -1,8 +1,3 @@
-'''
-@Author: Songtao Hei, Yiming Wang, Yujun Liu
-Main function.
-Input the training filename and the evaluation filename.
-'''
 
 from __future__ import with_statement
 from train import *

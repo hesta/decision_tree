@@ -1,8 +1,3 @@
-'''
-@Author: Songtao Hei, Yiming Wang, Yujun Liu
-Classify function.
-Use test data to classify.
-'''
 
 from train import *
 

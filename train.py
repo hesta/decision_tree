@@ -1,8 +1,3 @@
-'''
-@Author: Songtao Hei, Yiming Wang, Yujun Liu
-Learn function.
-Use the training data to build the decision tree.
-'''
 
 import math
 
