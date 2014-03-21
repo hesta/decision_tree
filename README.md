@@ -1,4 +1,4 @@
 decision_tree
 =============
 
-decision tree implemented in the AI class
+decision tree algorithm implemented in the AI class; tested on the IBM TGMC Watson Edition dataset.
