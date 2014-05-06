@@ -33,3 +33,15 @@ def classify(tree, data):
 
     return classification
 
+
+def classify_forest(forest, data):
+    
+    classification = []
+    for i in data:
+        result = [get_classification(i, tree) for tree in forest] 
+        if(result.count(False) > result.count(True)):
+            classification.append(True)
+        else:
+            classification.append(False)
+
+    return classification

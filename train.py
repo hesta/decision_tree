@@ -1,5 +1,7 @@
-
 import math
+import copy
+import random
+
 
 def majority_value(data, target_attr):
     """
@@ -40,9 +42,9 @@ def unique(lst):
     return unique_lst
 
 def eliminate_redundance(data, attributes, target_attr):
-    '''
+    """
     eliminate the attributes with only one value
-    '''
+    """
     
     temp_attributes = []
     # Return if there is only one column in the data
@@ -67,10 +69,10 @@ def eliminate_redundance(data, attributes, target_attr):
     return (data, attributes)  
              
 def choose_attribute(data, attributes, target_attr, fitness):
-    '''
+    """
     Cycles through all the attributes and returns the attribute with the
     highest information gain (or lowest entropy).
-    '''
+    """
     best_attr = None
     best = fitness(data, attributes[0], target_attr)  
 
@@ -124,9 +126,9 @@ def entropy(data, target_attr):
     
 
 def lst_entropy(lst):
-    '''
+    """
     Calulating entropy given only a list
-    '''
+    """
     
     val_freq = {}
     data_entropy = 0.0
@@ -144,10 +146,10 @@ def lst_entropy(lst):
     
             
 def dynamic_bounds(data, attr, target_attr):
-    '''
+    """
     Use dynamic bounds to calculate the entropy for each bound in the same
     column.
-    '''
+    """
     # Caculating dynamic bounds to decrease the branches of the trees
     
     temp_data = []
@@ -216,3 +218,27 @@ def create_decision_tree(data, attributes, target_attr, fitness_func):
         tree[best]['right'] = subtree2
 
     return tree
+
+
+def bagging(training_data, num_vertical, num_rows ):
+
+    #list of the rows used to create smaller decision tree
+    sub_dtree = []
+    # Total number of subtrees
+    num_subtrees = ( num_vertical / num_rows ) + 1
+    for k in range(0, num_subtrees):
+        sub_dtree.append(copy.deepcopy(random.sample(training_data, num_rows)))
+
+    return sub_dtree      
+
+
+
+def create_forest(training_data_lst, attributes, target_attr):
+
+    #list of decision tree 
+    forest = []
+    for i in training_data_lst:
+        forest.append(create_decision_tree(i, attributes, target_attr, dynamic_bounds))
+
+    return forest
+
