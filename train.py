@@ -62,8 +62,6 @@ def eliminate_redundance(data, attributes, target_attr):
     for x in temp_attributes:
         attributes.remove(x)
         for record in data:
-            if not record.has_key(x):
-               print record
             del record[x]
         
     return (data, attributes)  
