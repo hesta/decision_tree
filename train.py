@@ -1,5 +1,4 @@
 import math
-import copy
 import random
 
 
@@ -58,12 +57,12 @@ def eliminate_redundance(data, attributes, target_attr):
            if vals.count(vals[0]) == len(vals):
               temp_attributes.append(attr)
     
-    # Delete attributes now
+    # Delete attributes and build a new data copy to return avoiding mutation
+    data = [{key:value for (key,value) in record.items() if key not in temp_attributes} for record in data]
+
     for x in temp_attributes:
         attributes.remove(x)
-        for record in data:
-            del record[x]
-        
+       
     return (data, attributes)  
              
 def choose_attribute(data, attributes, target_attr, fitness):
@@ -223,7 +222,7 @@ def bagging(training_data, num_vertical, num_rows ):
     # Total number of subtrees
     num_subtrees = ( num_vertical / num_rows ) + 1
     for k in range(0, num_subtrees):
-        sub_dtree.append(copy.deepcopy(random.sample(training_data, num_rows)))
+        sub_dtree.append(random.sample(training_data, num_rows))
 
     return sub_dtree      
 
