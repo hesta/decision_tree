@@ -71,7 +71,7 @@ if __name__ == "__main__":
     attr = [i for i in range(training_length+1)]
     #dtree = create_decision_tree(training_data, attr, training_length, dynamic_bounds)
 
-    forest = create_forest(bagging(training_data, 300, 10), attr, training_length)
+    forest = create_forest(bagging(training_data, 300, 50), attr, training_length)
 
 
     training_data = ''

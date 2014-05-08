@@ -170,13 +170,11 @@ def dynamic_bounds(data, attr, target_attr):
            temp_entropy[val] = lst_entropy(temp_data)    
         temp_data = []
 
-    temp_list = temp_entropy.items()
-    best = temp_list[0]
-    for temp in temp_list:
-        if (temp[1] <= best[1]):
-           best = temp
+
+    best = max(temp_entropy.iteritems(), key=lambda x:x[1])
 
     return best           
+
 
 def create_decision_tree(data, attributes, target_attr, fitness_func):
     """
