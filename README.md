@@ -1,4 +1,4 @@
-decision_tree
+ID3 algorithm with bagging
 =============
 
-decision tree algorithm implemented in the AI class; tested on the IBM TGMC Watson Edition dataset.
+ID3 algorithm implemented in python, avoiding overfitting with bagging; tested on the IBM TGMC 2013 Watson Edition dataset. 
