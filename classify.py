@@ -12,14 +12,18 @@ def get_classification(record, tree):
        return tree
     
     # Traverse the tree further until a leaf node is found.
-    else:
+    else:    
         attr = tree.keys()[0]
-        if record[attr[0]] <= attr[1]:
-           temp = tree[attr]['left']
-           return get_classification(record, temp)
+        if type(attr[0])!= type("string"):
+            if record[attr[0]] <= attr[1]:
+                temp = tree[attr]['left']
+                return get_classification(record, temp)
+            else:
+                temp = tree[attr]['right']
+                return get_classification(record, temp)
         else:
-           temp = tree[attr]['right']
-           return get_classification(record, temp)
+            temp = tree[attr][record[attr[0]]]
+            return get_classification(record,temp)
  
 def classify(tree, data):
     '''
@@ -45,3 +49,4 @@ def classify_forest(forest, data):
             classification.append(True)
 
     return classification
+    

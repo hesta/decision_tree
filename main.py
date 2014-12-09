@@ -6,6 +6,7 @@ import os.path
 import csv
 
 
+
 def get_filenames():
     """
     Get the filename of training data and classification data
@@ -38,44 +39,63 @@ def read_in(filename):
         row = csv.reader(fin)
         data = []   
         for attr in row:
-            dict = {}
+            dic = {}
             i = 0
             length = len(attr)-1
             for element in attr:
-                if i == length:
-                    dict[i] = (element[0].upper() == 'T')
+                if i==0 or i==2 or i==4 or i==10 or i==11 or i==12:
+                    if element==" ?":
+                        dic[i]= 0.0
+                    else: dic[i]=float(element)
+                elif i==length:
+                    dic[i]=(element==" <=50K")
                 else:
-                    if element == '?':
-                        dict[i] = 0.0
-                    else:  
-                        dict[i] = float(element)
-                i = i + 1
-            data.append(dict)
-    
+                    if element==" ?":
+                        dic[str(i)]=""
+                    else:dic[str(i)]=element
+                i+=1
+            data.append(dic)   
     return data, length
+
+def read_for_compare(filename):
+    
+    with open(filename, 'r') as fin:
+        row = csv.reader(fin)
+        data = []   
+        for attr in row:
+            i = 0
+            length = len(attr)-1
+            for element in attr:
+                if i==length:
+                    data.append((element == " <=50K."))
+                i+=1
+
+    return data
 
 
 
 
 if __name__ == "__main__":
-
+    
     training_filename, test_filename = get_filenames()
     # Input the filename
     training_data, training_length = read_in( training_filename ) 
-
+    counter = 0.0
+    
     print "------------------------\n"
     print "------- Training -------\n"
     print "------------------------\n"
     print "\n" 
 
-    attr = [i for i in range(training_length+1)]
+    attr = [0,"1",2,"3",4,"5","6","7","8","9",10,11,12,"13",14]
     #dtree = create_decision_tree(training_data, attr, training_length, dynamic_bounds)
 
-    forest = create_forest(bagging(training_data, 300, 50), attr, training_length)
+    forest = create_forest(bagging(training_data, 300000, 300), attr, training_length)         #Two attribute need to be changed here
 
 
     training_data = ''
     test_data, test_length = read_in( test_filename )
+    compare_data = read_for_compare(test_filename) 
     print "------------------------\n"
     print "--   Classification   --\n"
     print "------------------------\n"
@@ -83,12 +103,16 @@ if __name__ == "__main__":
     #classification_result = classify(dtree, test_data)
 
     classification_result = classify_forest(forest, test_data)
-
-    # Output the classification
-    with open('result.csv', 'wb') as result_classify:
-        result_file = csv.writer(result_classify)
-        for result in classification_result: 
-            print result
-            result_file.writerow([str(result)])
+    
+    for i in range(len(classification_result)):
+      if classification_result[i] == compare_data[i]:
+         counter += 1.0
+    
+    print "The accuracy of the prediction is :"
+    print counter/len(classification_result)
      
-      
+    
+  
+
+    
+
